@@ -2,18 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using api.Model;
 
-namespace api.Migrations.Tenants
+namespace api.Migrations.Blogs
 {
-    [DbContext(typeof(TenantsDbContext))]
-    [Migration("20191122133408_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(BlogsDbContext))]
+    partial class BlogsDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,9 +19,9 @@ namespace api.Migrations.Tenants
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("api.Model.Tenant", b =>
+            modelBuilder.Entity("api.Model.Blog", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
@@ -33,13 +31,16 @@ namespace api.Migrations.Tenants
                     b.Property<string>("Description")
                         .HasColumnName("description");
 
-                    b.Property<string>("Key")
-                        .HasColumnName("key");
+                    b.Property<string>("Name")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("title");
 
                     b.HasKey("Id")
-                        .HasName("pk_tenants");
+                        .HasName("pk_blogs");
 
-                    b.ToTable("tenants");
+                    b.ToTable("blogs");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,43 @@ Different tenant identification strategies can be used. The following ones are i
 * Using the request `host` to provide the tenant and a configuration file lookup to map the tenant +
 `HostTenantIdentificationService.cs`
 
+== Using multiple DbScopes
+
+To use multiple DbScope objects one must use generic options in the constructor (`DbContextOptions<T>`).
+
+It is also advised to implement factory objects to generate the DB context objects when using tools such as `dotnet ef migrations` (see: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dbcontext-creation)
+
+== Creating the Code First Migrations
+
+* To create the (first) migration for the tenants context use:
++
+[source]
+--
+dotnet ef migrations add InitialCreate --context TenantsDbContext -o Migrations/Tenants
+--
+
+* To create the SQL scripts for the (first) migration for the tenants context use:
++
+[source]
+--
+dotnet ef migrations script --context TenantsDbContext -o Migrations/Tenants/scripts/00-initial-create.sql
+--
+
+* To create the (first) migration for the blogs context use:
++
+[source]
+--
+dotnet ef migrations add InitialCreate --context BlogsDbContext -o Migrations/Blogs
+--
+
+* To create the SQL scripts for the (first) migration for the tenants context use:
++
+[source]
+--
+dotnet ef migrations script --context BlogsDbContext -o Migrations/blogs/scripts/00-initial-create.sql
+--
+
+
 == Creating a DB per Tenant
 
 TODO: how do we want to create (and/or migrate) all tenant databases?

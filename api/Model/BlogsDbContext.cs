@@ -1,15 +1,28 @@
-using System;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
 namespace api.Model
 {
+    // used by tools, e.g. "dotnet ef migrations..."
+    public class BlogsDbContextFactory : IDesignTimeDbContextFactory<BlogsDbContext>
+    {
+        public BlogsDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<BlogsDbContext>();
+            optionsBuilder.UseNpgsql("database=undefined-db");
+
+            return new BlogsDbContext(optionsBuilder.Options);
+        }
+    }
+
     public class BlogsDbContext : DbContext
     {
         private readonly ITenantService tenantService;
         private readonly IConfiguration configuration;
 
+        public BlogsDbContext(DbContextOptions<BlogsDbContext> options) : base(options) { }
         public BlogsDbContext(ITenantService tenantService, IConfiguration configuration)
         {
             this.tenantService = tenantService;

@@ -23,11 +23,13 @@ namespace api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddHttpContextAccessor();
+            services.AddScoped<ITenantService, TenantService>();
+            
             services.AddScoped<ITenantIdentificationService, DbTenantIdentificationService>();
             // services.AddSingleton<ITenantIdentificationService>(new HeaderTenantIdentificationService(Configuration));
-            services.AddScoped<ITenantService, TenantService>();
 
-            services.AddDbContext<BlogsDbContext>();
+            services.AddScoped<BlogsDbContext>(provider => 
+                new BlogsDbContext(provider.GetService<ITenantService>(), Configuration));
             
             services.AddDbContext<TenantsDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("tenants-db")));
