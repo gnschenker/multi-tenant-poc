@@ -1,0 +1,15 @@
+= Multi Tenancy POC
+
+This is a POC showing how one can use Entity Framework with a Postgres DB per tenant.
+Different tenant identification strategies can be used. The following ones are implemented:
+
+* Using a request header (`X-Tenant`) to provide the tenant and a database lookup to map the tenant +
+`DbTenantIdentificationService.cs`
+* Using a request header (`X-Tenant`) to provide the tenant and a configuration file lookup to map the tenant +
+`HeaderTenantIdentificationService.cs`
+* Using the request `host` to provide the tenant and a configuration file lookup to map the tenant +
+`HostTenantIdentificationService.cs`
+
+== Creating a DB per Tenant
+
+TODO: how do we want to create (and/or migrate) all tenant databases?
