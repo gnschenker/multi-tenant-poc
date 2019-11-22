@@ -19,8 +19,6 @@ namespace api.Model
 
     public class TenantsDbContext : DbContext
     {
-        private IConfiguration _config;
-
         public TenantsDbContext(DbContextOptions<TenantsDbContext> options) : base(options) { }
 
         public DbSet<Tenant> Tenants { get; set; }
